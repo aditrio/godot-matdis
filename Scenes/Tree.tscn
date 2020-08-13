@@ -1,0 +1,110 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Assets/img/Repeating-Triangles.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Image.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/Image_tree.gd" type="Script" id=3]
+[ext_resource path="res://Assets/fonts/Roboto-Medium.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Scripts/TextTree.gd" type="Script" id=5]
+[ext_resource path="res://Assets/img/left.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/Back.tscn" type="PackedScene" id=7]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+use_filter = true
+font_data = ExtResource( 4 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.121569, 0.109804, 0.109804, 1 )
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id=4]
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="Tree" type="Node2D"]
+
+[node name="BG" type="Sprite" parent="."]
+modulate = Color( 0.827451, 0.141176, 0.0862745, 1 )
+position = Vector2( 529.127, 527.104 )
+scale = Vector2( 4.35665, 5.41391 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Image" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, -3.87921 )
+script = ExtResource( 3 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = 9.90906
+margin_top = 639.822
+margin_right = 560.909
+margin_bottom = 915.822
+focus_next = NodePath("../ColorRect")
+color = Color( 0.380392, 0.435294, 0.643137, 1 )
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+margin_left = 13.4447
+margin_top = 645.546
+margin_right = 557.445
+margin_bottom = 911.546
+color = Color( 0.168627, 0.211765, 0.376471, 1 )
+
+[node name="TextTree" type="RichTextLabel" parent="."]
+margin_left = 56.8182
+margin_top = 686.638
+margin_right = 517.818
+margin_bottom = 865.638
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+scroll_following = true
+script = ExtResource( 5 )
+
+[node name="next" type="Button" parent="."]
+editor/display_folded = true
+margin_left = 395.0
+margin_top = 937.7
+margin_right = 539.0
+margin_bottom = 1002.7
+custom_styles/normal = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="next"]
+position = Vector2( 76.1582, 31.9502 )
+rotation = 3.14159
+scale = Vector2( 0.116624, 0.1 )
+texture = ExtResource( 6 )
+
+[node name="prev" type="Button" parent="."]
+editor/display_folded = true
+margin_left = 30.0
+margin_top = 937.7
+margin_right = 174.0
+margin_bottom = 1002.7
+custom_styles/disabled = SubResource( 3 )
+custom_styles/normal = SubResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="prev"]
+position = Vector2( 66.1583, 31.9502 )
+scale = Vector2( 0.116624, 0.1 )
+texture = ExtResource( 6 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+
+[node name="Back" parent="." instance=ExtResource( 7 )]
+[connection signal="pressed" from="next" to="TextTree" method="_on_next_pressed"]
+[connection signal="pressed" from="prev" to="TextTree" method="_on_prev_pressed"]
+[connection signal="timeout" from="Timer" to="TextTree" method="_on_Timer_timeout"]
